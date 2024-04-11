@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table width = "100%" border="1">  
+        <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Jomart</td>
+            <td>jomart@gmail.com</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roma</td>
+            <td>roma@gmail.com</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Shoha</td>
+            <td>shoha@gmail.com</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Arkin</td>
+            <td>arkin@gmail.com</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Nurdos</td>
+            <td>nurdos@gmail.com</td>
+        </tr>
+    </table>
+
+    <button onclick="htmlToCsv('data.csv')">Connect html to csv</button>
+    <script type="text/javascript">
+        function htmlToCsv(filename){
+
+            var data = [];
+
+            var rows = document.querySelectorAll("table tr");
+
+            for(var i = 0; i < rows.length; i++){
+
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                for(j = 0; j < cols.length; j++){
+                    row.push(cols[j].innerText);
+                }
+                data.push(row.join(","));
+            }
+            downloadCsv(data.join("\n"), filename)
+        }
+        function downloadCsv(csv, filename){
+            var csv_file = new Blob([csv], { type: "text/csv"});
+            download_link = document.createElement("a");
+            download_link.download = filename;
+            download_link.href = window.URL.createObjectURL(csv_file);
+            download_link.style.display = "none";
+            document.body.appendChild(download_link);
+            download_link.click();
+        }
+    </script>
+</body>
+</html>
